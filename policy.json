@@ -1,0 +1,31 @@
+{
+  "allowlist": {
+    "stage": ["slack.post", "mail.draft", "mail.send", "gha.run", "gha.status", "sql.query", "chart.bar"],
+    "prod": ["slack.post", "mail.draft", "mail.send", "gha.status", "sql.query", "chart.bar"]
+  },
+  "denylist": {
+    "prod": ["gha.run"]
+  },
+  "approvals": {
+    "slack": {
+      "method": "slack.post",
+      "channel": "#approvals"
+    },
+    "otp": {
+      "method": "otp.generate"
+    }
+  },
+  "action_ledger": {
+    "enabled": true,
+    "path": "logs/action_ledger.log"
+  },
+  "connector_labels": {
+    "slack.post": {"scope": "write", "env": "all", "pii": false},
+    "mail.draft": {"scope": "write", "env": "all", "pii": true},
+    "mail.send": {"scope": "write", "env": "all", "pii": true},
+    "gha.run": {"scope": "write", "env": "stage", "pii": false},
+    "gha.status": {"scope": "read", "env": "all", "pii": false},
+    "sql.query": {"scope": "read", "env": "all", "pii": false},
+    "chart.bar": {"scope": "read", "env": "all", "pii": false}
+  }
+}

@@ -1,0 +1,105 @@
+[
+  {
+    "name": "slack.post",
+    "description": "Post a message to a Slack channel",
+    "readOnly": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "channel": { "type": "string" },
+        "text": { "type": "string" },
+        "thread_ts": { "type": "string" }
+      },
+      "required": ["channel", "text"]
+    },
+    "policy": { "requires_approval": "none" }
+  },
+  {
+    "name": "mail.draft",
+    "description": "Create an email draft",
+    "readOnly": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "to": { "type": "string" },
+        "subject": { "type": "string" },
+        "body_md": { "type": "string" }
+      },
+      "required": ["to", "subject", "body_md"]
+    },
+    "policy": { "requires_approval": "none" }
+  },
+  {
+    "name": "mail.send",
+    "description": "Send a previously created draft",
+    "readOnly": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "draft_id": { "type": "string" },
+        "dry_run": { "type": "boolean" }
+      },
+      "required": ["draft_id"]
+    },
+    "policy": { "requires_approval": "otp" }
+  },
+  {
+    "name": "gha.run",
+    "description": "Dispatch a GitHub Actions workflow on staging",
+    "readOnly": false,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "owner": { "type": "string" },
+        "repo": { "type": "string" },
+        "workflow_id": { "type": "string" },
+        "ref": { "type": "string" },
+        "inputs": { "type": "object" },
+        "dry_run": { "type": "boolean" }
+      },
+      "required": ["owner", "repo", "workflow_id", "ref"]
+    },
+    "policy": { "requires_approval": "slack", "env": "stage" }
+  },
+  {
+    "name": "gha.status",
+    "description": "Get the status of a GitHub Actions run",
+    "readOnly": true,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "run_id": { "type": "string" }
+      },
+      "required": ["run_id"]
+    },
+    "policy": { "requires_approval": "none" }
+  },
+  {
+    "name": "sql.query",
+    "description": "Run a read‑only SQL query",
+    "readOnly": true,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "text_sql": { "type": "string" },
+        "params": { "type": "array" }
+      },
+      "required": ["name", "text_sql"]
+    },
+    "policy": { "requires_approval": "none" }
+  },
+  {
+    "name": "chart.bar",
+    "description": "Generate a bar chart from JSON data and return a URL",
+    "readOnly": true,
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "json_data": { "type": "object" }
+      },
+      "required": ["json_data"]
+    },
+    "policy": { "requires_approval": "none" }
+  }
+]
